@@ -56,17 +56,17 @@ const VideoCarousel = () => {
     }
   }, [startPlay, videoId, isPlaying, loadedData]);
 
-  useEffect(() => {
-    const currentProgress = 0;
-    let span = videoSpanRef.current;
+//   useEffect(() => {
+//     // const currentProgress = 0;
+//     let span = videoSpanRef.current;
 
-    if (span[videoId]) {
-      let anim = gsap.to(span[videoId], {
-        onUpdate: () => {},
-        onComplete: () => {},
-      });
-    }
-  }, [startPlay, videoId]);
+//     if (span[videoId]) {
+//       let anim = gsap.to(span[videoId], {
+//         onUpdate: () => {},
+//         onComplete: () => {},
+//       });
+//     }
+//   }, [startPlay, videoId]);
 
   const handleProcess = (type: string, i: number) => {
     switch (type) {
