@@ -14,7 +14,6 @@ const Highlights = () => {
       y: 0,
     });
     gsap.to(".link", { opacity: 1, y: 0, stagger: 0.25 });
-    gsap.to(".right", { opacity: 1, y: 0 });
   }, []);
   return (
     <section
@@ -39,7 +38,7 @@ const Highlights = () => {
               />
             </p>
             <p className="link">
-              Watch the film
+              Watch the event
               <Image
                 alt="right"
                 src={rightImg}
