@@ -1,5 +1,5 @@
-import React, { JSX } from "react";
-import { useGLTF } from "@react-three/drei";
+import React, { JSX, useEffect } from "react";
+import { useGLTF, useTexture } from "@react-three/drei";
 import { GLTF } from "three/examples/jsm/Addons.js";
 import { Mesh } from "three";
 import * as THREE from "three";
@@ -9,22 +9,39 @@ type GLTFResult = GLTF & {
     [key: string]: Mesh;
   };
   materials: {
-    [key: string]: THREE.Material;
+    [key: string]: THREE.Material & { color: THREE.Color };
   };
 };
 
-const IPhoneModel = (props: JSX.IntrinsicElements["group"]) => {
+type IPhoneType = {
+  item: {
+    title: string;
+    color: string[];
+    img: string;
+  };
+  size: string;
+};
+
+const IPhoneModel = (props: JSX.IntrinsicElements["group"] & IPhoneType) => {
   const { nodes, materials } = useGLTF(
     "/models/scene.glb"
   ) as unknown as GLTFResult;
+  const texture = useTexture(props.item.img);
 
-  // const texture = useTexture(props.item.img);
-
-  // useEffect(() => {
-  //   Object.entries(materials).map((materials) => {
-  //     if(material[0] === '')
-  //   })
-  // }, [materials, props.item]);
+  useEffect(() => {
+    Object.entries(materials).map((material) => {
+      if (
+        material[0] !== "zFdeDaGNRwzccye" &&
+        material[0] !== "ujsvqBWRMnqdwPx" &&
+        material[0] !== "hUlRcbieVuIiOXG" &&
+        material[0] !== "jlzuBkUzuJqgiAK" &&
+        material[0] !== "xNrofRCqOXXHVZt"
+      ) {
+        material[1].color = new THREE.Color(props.item.color[0]);
+      }
+      material[1].needsUpdate = true;
+    });
+  }, [materials, props.item]);
 
   return (
     <group {...props} dispose={null}>
@@ -139,7 +156,10 @@ const IPhoneModel = (props: JSX.IntrinsicElements["group"]) => {
         geometry={nodes.xXDHkMplTIDAXLN.geometry}
         material={materials.pIJKfZsazmcpEiU}
         scale={0.01}
-      />
+      >
+        <meshStandardMaterial roughness={1} map={texture} />
+      </mesh>
+
       <mesh
         castShadow
         receiveShadow
